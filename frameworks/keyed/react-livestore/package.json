@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "build:analyze": "VITE_ANALYZE=1 run build",
+    "build": "WORKSPACE_ROOT='../../../' vite build",
+    "build:analyze": "WORKSPACE_ROOT='../../../' VITE_ANALYZE=1 run build",
     "dev": "WORKSPACE_ROOT='../../../' vite --force",
-    "preview": "vite preview"
+    "preview": "WORKSPACE_ROOT='../../../' vite preview"
   },
   "dependencies": {
     "@livestore/devtools-vite": "0.1.0",
@@ -31,5 +31,9 @@
     "typescript": "5.5.4",
     "vite": "^5.4.10",
     "vite-plugin-pwa": "^0.20.5"
+  },
+  "js-framework-benchmark": {
+    "frameworkVersionFromPackage": "react:livestore",
+    "frameworkHomeURL": "https://github.com/livestorejs/livestore"
   }
 }
