@@ -10,7 +10,7 @@ const todos = DbSchema.table(
     text: DbSchema.text({ default: '' }),
     completed: DbSchema.boolean({ default: false }),
     deleted: DbSchema.integer({ nullable: true }),
-    selected: DbSchema.boolean({ default: false }),
+    selected: DbSchema.boolean({ default: false })
   },
   { deriveMutations: true },
 )
@@ -18,7 +18,6 @@ const todos = DbSchema.table(
 const app = DbSchema.table(
   'app',
   {
-    newTodoText: DbSchema.text({ default: '' }),
     filter: DbSchema.text({ schema: Filter, default: 'all' }),
   },
   { deriveMutations: { enabled: true, localOnly: true } },

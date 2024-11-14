@@ -41,7 +41,7 @@ const Controls: React.FC = () => {
 
     // 4. Update function to modify every 10th record
     const update = () => {
-        store.mutate(mutations.updateTodos({}));
+        store.mutate(mutations.updateTenthTodos({}));
     };
 
     // 5. Clear function to delete all records

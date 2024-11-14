@@ -15,7 +15,7 @@ export const addMultipleTodos = defineMutation(
 export const deleteTodo = defineMutation(
   'deleteTodo',
   Schema.Struct({ id: Schema.String }),
-  (params) => sql`DELETE FROM todos WHERE id = ${params.id}`
+  (params) => `DELETE FROM todos WHERE id = '${params.id}'`
 );
 
 export const clearAll = defineMutation(
@@ -24,21 +24,21 @@ export const clearAll = defineMutation(
   sql`DELETE FROM todos`
 )
 
-export const updateTodos = defineMutation(
-  'updateTodos',
-  Schema.Array(Schema.Struct({ id: Schema.String })),
+export const updateTenthTodos = defineMutation(
+  'updateTenthTodos',
+  Schema.Struct({}),
   sql`UPDATE todos SET text = text || '!!!' WHERE (rowid - 1) % 10 = 0`
-)([])
+);
 
 export const swapRows = defineMutation(
   'swapRows',
-  Schema.Array(Schema.Struct({ idA: Schema.Number, idB: Schema.Number })),
-  sql`UPDATE todos SET rowid = CASE 
-      WHEN rowid = $idA THEN $idB
-      WHEN rowid = $idB THEN $idA 
-      ELSE rowid END 
-  WHERE rowid IN ($idA, $idB)`
-)([{ idA: 999, idB: 1000 }])
+  Schema.Struct({ idA: Schema.Number, idB: Schema.Number }),
+  (params) => sql`
+    UPDATE todos SET rowid = -1 WHERE rowid = ${params.idA};
+    UPDATE todos SET rowid = '${params.idA}' WHERE rowid = '${params.idB}';
+    UPDATE todos SET rowid = '${params.idB}' WHERE rowid = -1;
+  `
+);
 
 export const setFilter = defineMutation(
   'setFilter',
@@ -50,5 +50,8 @@ export const setFilter = defineMutation(
 export const selectTodoById = defineMutation(
   'selectTodoById',
   Schema.Struct({ id: Schema.String }),
-  (params) => sql`UPDATE todos SET selected = true WHERE id = ${params.id}`
-)
+  (params) => sql`
+    UPDATE todos SET selected = false;
+    UPDATE todos SET selected = true WHERE id = '${params.id}';
+  `
+);

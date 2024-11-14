@@ -31,13 +31,12 @@ export const MainSection: React.FC = () => {
 
   return (
     <section className="main">
-
       <table className="table table-hover table-striped test-data">
         <tbody>
           {visibleTodos.map((item) => (
-            <Row key={item.id} item={item} 
-                 onSelect={(id) => store.mutate(mutations.selectTodoById({ id }))} 
-                 onRemove={(id) => store.mutate(mutations.deleteTodo({ id, deleted: Date.now() }))} />
+            <Row key={item.id} item={item}
+              onSelect={(id) => store.mutate(mutations.selectTodoById({ id }))}
+              onRemove={(id) => store.mutate(mutations.deleteTodo({ id }))} />
           ))}
         </tbody>
       </table>
