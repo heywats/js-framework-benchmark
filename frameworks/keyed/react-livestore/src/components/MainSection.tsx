@@ -2,8 +2,8 @@ import { querySQL, rowQuery, SessionIdSymbol, sql } from '@livestore/livestore'
 import { useQuery, useStore } from '@livestore/react'
 import { Schema } from 'effect'
 import React from 'react'
-
-import { mutations, tables, type Todo } from '../schema/index.js'
+import Row from './Row'
+import { mutations, tables } from '../schema/index.js'
 
 // Define the reactive queries for this component
 
@@ -27,34 +27,20 @@ const visibleTodos$ = querySQL((get) => sql`select * from todos ${get(filterClau
 export const MainSection: React.FC = () => {
   const { store } = useStore()
 
-  // We record an event that specifies marking complete or incomplete,
-  // The reason is that this better captures the user's intention
-  // when the event gets synced across multiple devices--
-  // If another user toggled concurrently, we shouldn't toggle it back
-  const toggleTodo = React.useCallback(
-    ({ id, completed }: Todo) =>
-      store.mutate(completed ? mutations.uncompleteTodo({ id }) : mutations.completeTodo({ id })),
-    [store],
-  )
-
   const visibleTodos = useQuery(visibleTodos$)
 
   return (
     <section className="main">
-      <ul className="todo-list">
-        {visibleTodos.map((todo) => (
-          <li key={todo.id}>
-            <div className="view">
-              <input type="checkbox" className="toggle" checked={todo.completed} onChange={() => toggleTodo(todo)} />
-              <label>{todo.text}</label>
-              <button
-                className="destroy"
-                onClick={() => store.mutate(mutations.deleteTodo({ id: todo.id, deleted: Date.now() }))}
-              ></button>
-            </div>
-          </li>
-        ))}
-      </ul>
+
+      <table className="table table-hover table-striped test-data">
+        <tbody>
+          {visibleTodos.map((item) => (
+            <Row key={item.id} item={item} 
+                 onSelect={(id) => store.mutate(mutations.selectTodoById({ id }))} 
+                 onRemove={(id) => store.mutate(mutations.deleteTodo({ id, deleted: Date.now() }))} />
+          ))}
+        </tbody>
+      </table>
     </section>
   )
 }
