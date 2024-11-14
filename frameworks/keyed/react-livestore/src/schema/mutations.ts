@@ -3,46 +3,52 @@ import { Schema } from 'effect'
 
 import { Filter } from '../types.js'
 
-export const addTodo = defineMutation(
-  'addTodo',
-  Schema.Struct({ id: Schema.String, text: Schema.String }),
-  sql`INSERT INTO todos (id, text, completed) VALUES ($id, $text, false)`,
-)
-
-export const completeTodo = defineMutation(
-  'completeTodo',
-  Schema.Struct({ id: Schema.String }),
-  sql`UPDATE todos SET completed = true WHERE id = $id`,
-)
-
-export const uncompleteTodo = defineMutation(
-  'uncompleteTodo',
-  Schema.Struct({ id: Schema.String }),
-  sql`UPDATE todos SET completed = false WHERE id = $id`,
-)
+export const addMultipleTodos = defineMutation(
+  'addMultipleTodos',
+  Schema.Array(Schema.Struct({ id: Schema.String, text: Schema.String })),
+  (todos) => {
+    const values = todos.map(({ id, text }) => `('${id}', '${text}')`).join(", ");
+    return sql`INSERT INTO todos (id, text) VALUES ${values}`;
+  }
+);
 
 export const deleteTodo = defineMutation(
   'deleteTodo',
-  Schema.Struct({ id: Schema.String, deleted: Schema.Number }),
-  sql`UPDATE todos SET deleted = $deleted WHERE id = $id`,
+  Schema.Struct({ id: Schema.String }),
+  (params) => sql`DELETE FROM todos WHERE id = ${params.id}`
+);
+
+export const clearAll = defineMutation(
+  'clearAll',
+  Schema.Struct({}),
+  sql`DELETE FROM todos`
 )
 
-export const clearCompleted = defineMutation(
-  'clearCompleted',
-  Schema.Struct({ deleted: Schema.Number }),
-  sql`UPDATE todos SET deleted = $deleted WHERE completed = true`,
-)
+export const updateTodos = defineMutation(
+  'updateTodos',
+  Schema.Array(Schema.Struct({ id: Schema.String })),
+  sql`UPDATE todos SET text = text || '!!!' WHERE (rowid - 1) % 10 = 0`
+)([])
 
-export const updateNewTodoText = defineMutation(
-  'updateNewTodoText',
-  Schema.Struct({ text: Schema.String, sessionId: Schema.String }),
-  sql`UPDATE app SET newTodoText = $text WHERE id = $sessionId`,
-  { localOnly: true },
-)
+export const swapRows = defineMutation(
+  'swapRows',
+  Schema.Array(Schema.Struct({ idA: Schema.Number, idB: Schema.Number })),
+  sql`UPDATE todos SET rowid = CASE 
+      WHEN rowid = $idA THEN $idB
+      WHEN rowid = $idB THEN $idA 
+      ELSE rowid END 
+  WHERE rowid IN ($idA, $idB)`
+)([{ idA: 999, idB: 1000 }])
 
 export const setFilter = defineMutation(
   'setFilter',
   Schema.Struct({ filter: Filter, sessionId: Schema.String }),
   sql`UPDATE app SET filter = $filter WHERE id = $sessionId`,
   { localOnly: true },
+)
+
+export const selectTodoById = defineMutation(
+  'selectTodoById',
+  Schema.Struct({ id: Schema.String }),
+  (params) => sql`UPDATE todos SET selected = true WHERE id = ${params.id}`
 )

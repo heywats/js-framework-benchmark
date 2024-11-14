@@ -10,6 +10,7 @@ const todos = DbSchema.table(
     text: DbSchema.text({ default: '' }),
     completed: DbSchema.boolean({ default: false }),
     deleted: DbSchema.integer({ nullable: true }),
+    selected: DbSchema.boolean({ default: false }),
   },
   { deriveMutations: true },
 )
