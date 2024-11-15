@@ -27,6 +27,7 @@ export const App: React.FC = () => (
   <LiveStoreProvider
     schema={schema}
     renderLoading={(_) => <div>Loading LiveStore ({_.stage})...</div>}
+    renderError={(error: any) => <div>Error: {error.toString()}</div>}
     adapter={adapter}
     batchUpdates={batchUpdates}
   >
