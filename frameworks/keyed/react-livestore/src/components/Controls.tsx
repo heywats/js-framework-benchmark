@@ -6,7 +6,7 @@ import { mutations, tables } from '../schema/index.js'
 import phrasings from '../schema/data.js'
 import Button from './Button'
 
-// let id = 1;
+let id = 1;
 const random = (max) => Math.round(Math.random() * 1000) % max;
 
 const Controls: React.FC = () => {
@@ -19,7 +19,7 @@ const Controls: React.FC = () => {
             ${phrasings.colours[random(phrasings.colours.length)]} 
             ${phrasings.nouns[random(phrasings.nouns.length)]}`;
 
-            todos.push({ id: uuid(), text: text });
+            todos.push({ id: `${id++}`, text: text });
         }
         store.mutate(mutations.addMultipleTodos(todos));
     };

@@ -17,6 +17,7 @@ const Row = memo(
                             aria-hidden="true" />
                     </a>
                 </td>
+                <td className="col-md-6"></td>
             </tr>
         )
     },
