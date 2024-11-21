@@ -14,6 +14,7 @@ import phrasings from './schema/data.js'
 
 
 let id = 1;
+const appId = crypto.randomUUID();
 
 const adapter = makeAdapter({
   storage: { type: 'opfs' },
@@ -162,6 +163,7 @@ const AppBody: React.FC = () => {
 
 export const App: React.FC = () => (
   <LiveStoreProvider
+    storeId={appId}
     schema={schema}
     renderLoading={(_) => <div>Loading LiveStore ({_.stage})...</div>}
     renderError={(error) => <div>Error: {error.toString()}</div>}
