@@ -2,18 +2,11 @@
 ================================
 The following benchmarks failed:
 ================================
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 01_run1k failed: checkElementExists failed for pierce/#run;
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 02_replace1k failed: checkElementContainsText pierce/tbody>tr:nth-of-type(1)>td:nth-of-type(1) failed. expected 1001, but was 1
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 03_update10th1k_x16 failed: checkElementContainsText pierce/tbody>tr:nth-of-type(991)>td:nth-of-type(2)>a failed. expected  !!!, but was fancy brown pizza!!!
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 04_select1k failed: checkElementExists failed for pierce/#run;
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 05_swap1k failed: checkElementContainsText pierce/tbody>tr:nth-of-type(999)>td:nth-of-type(1) failed. expected 2, but was 1000
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 06_remove-one-1k failed: checkElementExists failed for pierce/#run;
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 07_create10k failed: checkElementExists failed for pierce/#run;
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 08_create1k-after1k_x2 failed: checkElementExists failed for pierce/#run;
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 09_clear1k_x8 failed: checkElementExists failed for pierce/#run;
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 21_ready-memory failed: performance.measureUserAgentSpecificMemory is not a function
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 22_run-memory failed: performance.measureUserAgentSpecificMemory is not a function
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 23_update5-memory failed: checkElementContainsText pierce/tbody>tr:nth-of-type(1)>td:nth-of-type(2)>a failed. expected  !!!, but was handsome red mouse!!!!!!
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 25_run-clear-memory failed: performance.measureUserAgentSpecificMemory is not a function
-[ ] Executing frameworks/keyed/react-livestore/dist and benchmark 26_run-10k-memory failed: performance.measureUserAgentSpecificMemory is not a function
-run was not completely sucessful Benchmarking failed with errors
+Executing frameworks/keyed/react-livestore/dist and benchmark 03_update10th1k_x16 failed: checkElementContainsText pierce/tbody>tr:nth-of-type(991)>td:nth-of-type(2)>a failed. expected  !!!, but was helpful blue desk!!!
+Executing frameworks/keyed/react-livestore/dist and benchmark 05_swap1k failed: checkElementContainsText pierce/tbody>tr:nth-of-type(999)>td:nth-of-type(1) failed. expected 2, but was 1000
+Executing frameworks/keyed/react-livestore/dist and benchmark 08_create1k-after1k_x2 failed: checkElementExists failed for pierce/tbody>tr:nth-of-type(2000)>td:nth-of-type(1);
+Executing frameworks/keyed/react-livestore/dist and benchmark 21_ready-memory failed: performance.measureUserAgentSpecificMemory is not a function
+Executing frameworks/keyed/react-livestore/dist and benchmark 22_run-memory failed: performance.measureUserAgentSpecificMemory is not a function
+Executing frameworks/keyed/react-livestore/dist and benchmark 23_update5-memory failed: checkElementContainsText pierce/tbody>tr:nth-of-type(1)>td:nth-of-type(2)>a failed. expected  !!!, but was big orange keyboard!!!!!!
+Executing frameworks/keyed/react-livestore/dist and benchmark 25_run-clear-memory failed: performance.measureUserAgentSpecificMemory is not a function
+Executing frameworks/keyed/react-livestore/dist and benchmark 26_run-10k-memory failed: performance.measureUserAgentSpecificMemory is not a function
