@@ -13,7 +13,7 @@ import { Schema } from 'effect'
 import phrasings from './schema/data.js'
 
 
-let id = 1;
+let nextId = 1;
 const appId = crypto.randomUUID();
 
 const adapter = makeAdapter({
@@ -23,12 +23,7 @@ const adapter = makeAdapter({
 })
 
 
-const filterClause$ = rowQuery(tables.app, SessionIdSymbol, {
-  map: ({ filter }) => `where ${filter === 'all' ? '' : `completed = ${filter === 'completed'} and `}deleted is null`,
-  label: 'filterClause',
-})
-
-const visibleTodos$ = querySQL((get) => sql`select * from todos ${get(filterClause$)}`, {
+const visibleTodos$ = querySQL(() => sql`select * from todos`, {
   schema: Schema.Array(tables.todos.schema),
   label: 'visibleTodos',
 })
@@ -42,7 +37,7 @@ const buildData = (count) => {
       ${phrasings.colours[random(phrasings.colours.length)]} 
       ${phrasings.nouns[random(phrasings.nouns.length)]}`;
 
-    data.push({ id: `${id++}`, text: text });
+    data.push({ id: `${nextId++}`, text: text });
   }
   return data;
 };
@@ -93,12 +88,14 @@ const AppBody: React.FC = () => {
 
   // 2. RunLots function to insert 10,000 records
   const runLots = () => {
+    clear();
     const data = buildData(10000);
     store.mutate(mutations.addMultipleTodos(data));
   };
 
   // 3. Add function to append 1,000 records
   const add = () => {
+    clear();
     const data = buildData(1000);
     store.mutate(mutations.addMultipleTodos(data));
   };
