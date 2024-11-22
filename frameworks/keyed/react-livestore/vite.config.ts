@@ -12,7 +12,7 @@ const credentiallessHeaders = {
 const isProdBuild = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
-  base: "/frameworks/keyed/react-livestore/dist/",
+  base: "/frameworks/keyed/react-livestore/dist",
   server: {
     port: process.env.PORT ? Number(process.env.PORT) : 60001,
     headers: credentiallessHeaders,

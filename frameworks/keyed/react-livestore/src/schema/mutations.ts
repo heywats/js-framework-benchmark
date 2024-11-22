@@ -3,12 +3,25 @@ import { Schema } from 'effect'
 
 import { Filter } from '../types.js'
 
+// export const addMultipleTodos = defineMutation(
+//   'addMultipleTodos',
+//   Schema.Array(Schema.Struct({ id: Schema.String, text: Schema.String })),
+//   (todos) => {
+//     const values = todos.map(({ id, text }) => `('${id}', '${text}')`).join(", ");
+//     return sql`INSERT INTO todos (id, text) VALUES ${values}`;
+//   }
+// );
+
 export const addMultipleTodos = defineMutation(
   'addMultipleTodos',
   Schema.Array(Schema.Struct({ id: Schema.String, text: Schema.String })),
   (todos) => {
+
     const values = todos.map(({ id, text }) => `('${id}', '${text}')`).join(", ");
-    return sql`INSERT INTO todos (id, text) VALUES ${values}`;
+    return sql`
+     DELETE FROM todos WHERE EXISTS (SELECT 1 FROM todos);
+     INSERT INTO todos (id, text) VALUES ${values};
+    `;
   }
 );
 
