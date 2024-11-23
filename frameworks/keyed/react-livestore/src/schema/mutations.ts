@@ -40,7 +40,7 @@ export const clearAll = defineMutation(
 export const updateTenthTodos = defineMutation(
   'updateTenthTodos',
   Schema.Struct({}),
-  sql`UPDATE todos SET text = text || '!!!' WHERE (rowid - 1) % 10 = 0`
+  sql`UPDATE todos SET text = text || ' !!!' WHERE (rowid - 1) % 10 = 0`
 );
 
 export const swapRows = defineMutation(
