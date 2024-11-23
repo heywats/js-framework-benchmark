@@ -95,9 +95,8 @@ const AppBody: React.FC = () => {
 
   // 3. Add function to append 1,000 records
   const add = () => {
-    clear();
     const data = buildData(1000);
-    store.mutate(mutations.addMultipleTodos(data));
+    store.mutate(mutations.appendMultipleTodos(data));
   };
 
   // 4. Update function to modify every 10th record

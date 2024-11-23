@@ -25,6 +25,16 @@ export const addMultipleTodos = defineMutation(
   }
 );
 
+export const appendMultipleTodos = defineMutation(
+  'appenddMultipleTodos',
+  Schema.Array(Schema.Struct({ id: Schema.String, text: Schema.String })),
+  (todos) => {
+
+    const values = todos.map(({ id, text }) => `('${id}', '${text}')`).join(", ");
+    return sql`INSERT INTO todos (id, text) VALUES ${values};`;
+  }
+);
+
 export const deleteTodo = defineMutation(
   'deleteTodo',
   Schema.Struct({ id: Schema.String }),
