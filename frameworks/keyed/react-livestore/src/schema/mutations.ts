@@ -43,13 +43,23 @@ export const updateTenthTodos = defineMutation(
   sql`UPDATE todos SET text = text || ' !!!' WHERE (rowid - 1) % 10 = 0`
 );
 
+// export const swapRows = defineMutation(
+//   'swapRows',
+//   Schema.Struct({ idA: Schema.Number, idB: Schema.Number }),
+//   (params) => sql`
+//     UPDATE todos SET rowid = -1 WHERE rowid = ${params.idA};
+//     UPDATE todos SET rowid = '${params.idA}' WHERE rowid = '${params.idB}';
+//     UPDATE todos SET rowid = '${params.idB}' WHERE rowid = -1;
+//   `
+// );
+
 export const swapRows = defineMutation(
   'swapRows',
-  Schema.Struct({ idA: Schema.Number, idB: Schema.Number }),
-  (params) => sql`
-    UPDATE todos SET rowid = -1 WHERE rowid = ${params.idA};
-    UPDATE todos SET rowid = '${params.idA}' WHERE rowid = '${params.idB}';
-    UPDATE todos SET rowid = '${params.idB}' WHERE rowid = -1;
+  Schema.Struct({}),
+  () => sql`
+    UPDATE todos SET rowid = -1 WHERE rowid = 2;
+    UPDATE todos SET rowid = 2 WHERE rowid = 999;
+    UPDATE todos SET rowid = 999 WHERE rowid = -1;
   `
 );
 

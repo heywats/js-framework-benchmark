@@ -3,7 +3,7 @@ import React from 'react'
 import { unstable_batchedUpdates as batchUpdates } from 'react-dom'
 
 import { makeAdapter } from '@livestore/web'
-import { querySQL, rowQuery, SessionIdSymbol, sql } from '@livestore/livestore'
+import { querySQL, sql } from '@livestore/livestore'
 import { LiveStoreProvider, useQuery, useStore } from '@livestore/react'
 import LiveStoreSharedWorker from '@livestore/web/shared-worker?sharedworker'
 import LiveStoreWorker from './livestore.worker?worker'
@@ -23,9 +23,9 @@ const adapter = makeAdapter({
 })
 
 
-const visibleTodos$ = querySQL(() => sql`select * from todos`, {
+const todos$ = querySQL(() => sql`select * from todos`, {
   schema: Schema.Array(tables.todos.schema),
-  label: 'visibleTodos',
+  label: 'todos',
 })
 
 const random = (max) => Math.round(Math.random() * 1000) % max;
@@ -78,7 +78,7 @@ const Button = ({ id, cb, title }) => (
 
 const AppBody: React.FC = () => {
   const { store } = useStore()
-  const visibleTodos = useQuery(visibleTodos$)
+  const todos = useQuery(todos$)
 
   // 1. Run function to insert 1,000 records
   const run = () => {
@@ -113,7 +113,7 @@ const AppBody: React.FC = () => {
   // 6. SwapRows function to swap rows
   const swapRows = () => {
     // SQL logic for swapping two rows based on rowids
-    store.mutate(mutations.swapRows({ idA: 999, idB: 1000 }));
+    store.mutate(mutations.swapRows({}));
   };
 
 
@@ -145,7 +145,7 @@ const AppBody: React.FC = () => {
     </div>
     <table className="table table-hover table-striped test-data">
       <tbody>
-        {visibleTodos.map((item) => (
+        {todos.map((item) => (
           <Row key={item.id} item={item}
             onSelect={(id) => store.mutate(mutations.selectTodoById({ id }))}
             onRemove={(id) => store.mutate(mutations.deleteTodo({ id }))} />
